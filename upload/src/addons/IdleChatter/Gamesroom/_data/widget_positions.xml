@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget_positions>
+  <widget_position position_id="gamesroom_sidebar" active_key="gamesroom" />
+  <widget_position position_id="gamesroom_index_sidebar" active_key="gamesroom_index" />
+  <widget_position position_id="gamesroom_play_sidebar" active_key="gamesroom_play" />
+</widget_positions>

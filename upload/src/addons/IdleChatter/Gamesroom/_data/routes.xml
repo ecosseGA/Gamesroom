@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<routes>
+  <!-- Admin routes -->
+  <route route_type="admin" route_prefix="gamesroom" controller="IdleChatter\Gamesroom:Game" context="gamesroom"/>
+  <route route_type="admin" route_prefix="gamesroom" sub_name="games" format="games/:int&lt;game_id&gt;/:action" controller="IdleChatter\Gamesroom:Game" context="gamesroom"/>
+  <route route_type="admin" route_prefix="gamesroom" sub_name="categories" format="categories/:int&lt;category_id&gt;/:action" controller="IdleChatter\Gamesroom:Category" context="gamesroom"/>
+  <route route_type="admin" route_prefix="gamesroom" sub_name="browse" format="browse/:action" controller="IdleChatter\Gamesroom:Browse" context="gamesroom"/>
+  
+  <!-- Public routes -->
+  <route route_type="public" route_prefix="gamesroom" controller="IdleChatter\Gamesroom:Index" context="gamesroom"/>
+  <route route_type="public" route_prefix="gamesroom" sub_name="play" format="play/:int&lt;game_id,title&gt;/" controller="IdleChatter\Gamesroom:Play" context="gamesroom"/>
+</routes>

@@ -1,0 +1,13 @@
+{
+    "legacy_addon_id": "",
+    "title": "Gamesroom - HTML5 Games Portal",
+    "description": "Simple HTML5 games portal with GameMonetize RSS feed. Fetches 500+ games automatically with real thumbnails and working embed URLs. Clean version with cosmetic improvements.",
+    "version_id": 3003001,
+    "version_string": "3.3.1",
+    "dev": "IdleChatter",
+    "dev_url": "",
+    "require": {
+        "XF": [2030000, "XenForo 2.3.0+"]
+    },
+    "icon": "fa-gamepad"
+}

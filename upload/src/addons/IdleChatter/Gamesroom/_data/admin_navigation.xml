@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<admin_navigation>
+  <admin_navigation_entry navigation_id="gamesroom" display_order="600" link="gamesroom/games" icon="fa-gamepad" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="gamesroom_browse" parent_navigation_id="gamesroom" display_order="5" link="gamesroom/browse" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="gamesroom_games" parent_navigation_id="gamesroom" display_order="10" link="gamesroom/games" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="gamesroom_categories" parent_navigation_id="gamesroom" display_order="20" link="gamesroom/categories" debug_only="0" development_only="0" hide_no_children="0"/>
+</admin_navigation>

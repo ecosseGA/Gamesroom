@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget_definitions>
+  <widget_definition definition_id="gamesroom_featured_games" definition_class="IdleChatter\Gamesroom\Widget\FeaturedGames" />
+  <widget_definition definition_id="gamesroom_most_played" definition_class="IdleChatter\Gamesroom\Widget\MostPlayed" />
+  <widget_definition definition_id="gamesroom_latest_played" definition_class="IdleChatter\Gamesroom\Widget\LatestPlayed" />
+</widget_definitions>

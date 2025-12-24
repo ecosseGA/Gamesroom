@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='utf-8'?>
+<phrases>
+  
+  <phrase title="admin_navigation.gamesroom" version_id="2001003" version_string="2.1.3">Gamesroom</phrase>
+  <phrase title="admin_navigation.gamesroom_games" version_id="2001003" version_string="2.1.3">Games</phrase>
+  <phrase title="admin_navigation.gamesroom_categories" version_id="2001003" version_string="2.1.3">Categories</phrase>
+    
+  <phrase title="gamesroom" version_id="2001003" version_string="2.1.3">Gamesroom</phrase>
+  <phrase title="gamesroom_games" version_id="2001003" version_string="2.1.3">Games</phrase>
+  <phrase title="gamesroom_categories" version_id="2001003" version_string="2.1.3">Categories</phrase>
+  <phrase title="gamesroom_browse_games" version_id="2001003" version_string="2.1.3">Browse Games</phrase>
+  <phrase title="gamesroom_all_categories" version_id="2001003" version_string="2.1.3">All Categories</phrase>
+    
+  <phrase title="gamesroom_add_game" version_id="2001003" version_string="2.1.3">Add game</phrase>
+  <phrase title="gamesroom_edit_game" version_id="2001003" version_string="2.1.3">Edit game</phrase>
+  <phrase title="gamesroom_delete_game" version_id="2001003" version_string="2.1.3">Delete game</phrase>
+  <phrase title="gamesroom_quick_add" version_id="2001003" version_string="2.1.3">Quick add game</phrase>
+  <phrase title="gamesroom_quick_add_explain" version_id="2001003" version_string="2.1.3">Quickly add a game by pasting its embed URL from GamePix, GameDistribution, GameMonetize, or any game platform. The system will auto-detect the distributor and set default dimensions.</phrase>
+  <phrase title="gamesroom_game_details" version_id="2001003" version_string="2.1.3">Game details</phrase>
+  <phrase title="gamesroom_embed_url" version_id="2001003" version_string="2.1.3">Embed URL</phrase>
+  <phrase title="gamesroom_embed_url_explain" version_id="2001003" version_string="2.1.3">The full iframe or embed URL from the game distributor</phrase>
+  <phrase title="gamesroom_thumbnail_url" version_id="2001003" version_string="2.1.3">Thumbnail URL</phrase>
+  <phrase title="gamesroom_thumbnail_url_explain" version_id="2001003" version_string="2.1.3">Optional: Direct URL to a thumbnail image for the game</phrase>
+  <phrase title="gamesroom_distributor" version_id="2001003" version_string="2.1.3">Distributor</phrase>
+  <phrase title="gamesroom_distributor_explain" version_id="2001003" version_string="2.1.3">Automatically detected from the embed URL</phrase>
+  <phrase title="gamesroom_dimensions" version_id="2001003" version_string="2.1.3">Dimensions</phrase>
+  <phrase title="gamesroom_width" version_id="2001003" version_string="2.1.3">Width (pixels)</phrase>
+  <phrase title="gamesroom_height" version_id="2001003" version_string="2.1.3">Height (pixels)</phrase>
+  <phrase title="gamesroom_plays" version_id="2001003" version_string="2.1.3">Plays</phrase>
+  <phrase title="gamesroom_no_games" version_id="2001003" version_string="2.1.3">No games have been created yet.</phrase>
+  <phrase title="gamesroom_no_games_found" version_id="2001003" version_string="2.1.3">No games found in this category. Try browsing all games or select a different category.</phrase>
+  <phrase title="gamesroom_no_games_available" version_id="2001003" version_string="2.1.3">No games available yet. Check back soon!</phrase>
+   
+  <phrase title="gamesroom_add_category" version_id="2001003" version_string="2.1.3">Add category</phrase>
+  <phrase title="gamesroom_edit_category" version_id="2001003" version_string="2.1.3">Edit category</phrase>
+  <phrase title="gamesroom_delete_category" version_id="2001003" version_string="2.1.3">Delete category</phrase>
+  <phrase title="gamesroom_category_icon" version_id="2001003" version_string="2.1.3">Icon</phrase>
+  <phrase title="gamesroom_category_icon_explain" version_id="2001003" version_string="2.1.3">Font Awesome icon class (e.g., fa-gamepad, fa-puzzle-piece, fa-chess)</phrase>
+   
+  <phrase title="gamesroom_play_now" version_id="2001003" version_string="2.1.3">Play now</phrase>
+  <phrase title="gamesroom_all_games" version_id="2001003" version_string="2.1.3">All games</phrase>
+  <phrase title="gamesroom_most_played" version_id="2001003" version_string="2.1.3">Most played</phrase>
+  <phrase title="gamesroom_recently_added" version_id="2001003" version_string="2.1.3">Recently added</phrase>
+  <phrase title="gamesroom_related_games" version_id="2001003" version_string="2.1.3">Related Games</phrase>
+  <phrase title="gamesroom_back_to_games" version_id="2001003" version_string="2.1.3">Back to Games</phrase>
+  <phrase title="gamesroom_filter_by_category" version_id="2001003" version_string="2.1.3">Filter by category</phrase>
+  <phrase title="gamesroom_open_in_window" version_id="2001003" version_string="2.1.3">Open in New Window</phrase>
+  
+  <phrase title="gamesroom_requested_game_not_found" version_id="2001003" version_string="2.1.3">The requested game could not be found.</phrase>
+  
+  <phrase title="admin_navigation.gamesroom_browse" version_id="2001010" version_string="2.2.0">Browse GamePix</phrase>
+  <phrase title="gamesroom_browse_catalog" version_id="2001010" version_string="2.2.0">Browse GamePix Catalog</phrase>
+  <phrase title="gamesroom_select_category" version_id="2001010" version_string="2.2.0">Select category</phrase>
+  <phrase title="gamesroom_already_imported" version_id="2001010" version_string="2.2.0">Already Imported</phrase>
+  <phrase title="gamesroom__import" version_id="2001010" version_string="2.2.0">Import Game</phrase>
+
+  <phrase title="gamesroom_featured_games" version_id="2002000" version_string="2.2.0">Featured Games</phrase>
+  <phrase title="gamesroom_about_game" version_id="2002000" version_string="2.2.0">About This Game</phrase>
+  <phrase title="gamesroom_game_info" version_id="2002000" version_string="2.2.0">Game Information</phrase>
+  <phrase title="gamesroom_more_games" version_id="2002000" version_string="2.2.0">More Games You Might Like</phrase>
+ 
+  <phrase title="gamesroom_featured" version_id="2002000" version_string="2.2.0">Featured</phrase>
+  <phrase title="gamesroom_mark_as_featured" version_id="2002000" version_string="2.2.0">Mark as featured</phrase>
+   
+  <phrase title="gamesroom_browse_distributor" version_id="2004000" version_string="2.4.0">Browse {distributor}</phrase>
+  <phrase title="gamesroom_showing_games" version_id="2004000" version_string="2.4.0">Showing {start}-{end} of {total} games</phrase>
+  <phrase title="gamesroom_search_games" version_id="2004000" version_string="2.4.0">Search games...</phrase>
+  <phrase title="gamesroom_load_more" version_id="2004000" version_string="2.4.0">Load More Games</phrase>
+  <phrase title="gamesroom_no_api_needed" version_id="2004000" version_string="2.4.0">Unable to connect to API. Please check your API key.</phrase>
+  
+  <phrase title="gamesroom_latest_played" version_id="2005000" version_string="2.5.0">Recently Played</phrase>
+  <phrase title="nav.gamesroom" version_id="2005000" version_string="2.5.0">Gamesroom</phrase>
+  <phrase title="permission_group.gamesroom" version_id="2005000" version_string="2.5.0">Gamesroom</phrase>
+  <phrase title="permission.gamesroom_view" version_id="2005000" version_string="2.5.0">View gamesroom</phrase>
+  <phrase title="interface_group.gamesroomPerms" version_id="2005000" version_string="2.5.0">Gamesroom Permissions</phrase>
+  <phrase title="nav.ic_gamesroom" version_id="2005100" version_string="2.5.1">Gamesroom</phrase>
+</phrases>

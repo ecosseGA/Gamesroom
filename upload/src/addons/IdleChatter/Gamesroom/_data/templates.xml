@@ -1,0 +1,1034 @@
+<?xml version='1.0' encoding='utf-8'?>
+<templates>
+  
+  
+  <template type="admin" title="gamesroom_game_list" version_id="2001003" version_string="2.1.3">&lt;xf:title&gt;{{ phrase('gamesroom_games') }}&lt;/xf:title&gt;
+
+&lt;div class="block"&gt;
+	&lt;div class="block-container"&gt;
+		&lt;div class="block-body"&gt;
+			&lt;xf:button href="{{ link('admin:gamesroom/games/quick-add') }}" icon="bolt" overlay="true" class="button--cta"&gt;
+				{{ phrase('gamesroom_quick_add') }}
+			&lt;/xf:button&gt;
+			&lt;xf:button href="{{ link('admin:gamesroom/games/add') }}" icon="add" overlay="true"&gt;
+				{{ phrase('gamesroom_add_game') }}
+			&lt;/xf:button&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;xf:if is="count($games)"&gt;
+	&lt;div class="block"&gt;
+		&lt;div class="block-container"&gt;
+			&lt;h3 class="block-header"&gt;{{ phrase('gamesroom_games') }}&lt;/h3&gt;
+			&lt;div class="block-body"&gt;
+				&lt;xf:datalist&gt;
+					&lt;xf:datarow rowtype="header"&gt;
+						&lt;xf:cell&gt;{{ phrase('title') }}&lt;/xf:cell&gt;
+						&lt;xf:cell&gt;{{ phrase('category') }}&lt;/xf:cell&gt;
+						&lt;xf:cell&gt;{{ phrase('gamesroom_distributor') }}&lt;/xf:cell&gt;
+						&lt;xf:cell&gt;{{ phrase('gamesroom_plays') }}&lt;/xf:cell&gt;
+						&lt;xf:cell&gt;{{ phrase('status') }}&lt;/xf:cell&gt;
+						&lt;xf:cell&gt;&lt;/xf:cell&gt;
+					&lt;/xf:datarow&gt;
+					
+					&lt;xf:foreach loop="$games" value="$game"&gt;
+						&lt;xf:datarow&gt;
+							&lt;xf:cell&gt;&lt;strong&gt;{$game.title}&lt;/strong&gt;&lt;/xf:cell&gt;
+							&lt;xf:cell&gt;
+								&lt;xf:if is="$game.Category"&gt;
+									&lt;i class="fa {$game.Category.icon}"&gt;&lt;/i&gt; {$game.Category.title}
+								&lt;xf:else /&gt;
+									&lt;span class="u-muted"&gt;{{ phrase('none') }}&lt;/span&gt;
+								&lt;/xf:if&gt;
+							&lt;/xf:cell&gt;
+							&lt;xf:cell&gt;{$game.getDistributorName()}&lt;/xf:cell&gt;
+							&lt;xf:cell&gt;{$game.play_count|number}&lt;/xf:cell&gt;
+							&lt;xf:cell&gt;
+								&lt;xf:if is="$game.active"&gt;
+									&lt;span class="label label--green"&gt;{{ phrase('active') }}&lt;/span&gt;
+								&lt;xf:else /&gt;
+									&lt;span class="label label--red"&gt;{{ phrase('inactive') }}&lt;/span&gt;
+								&lt;/xf:if&gt;
+							&lt;/xf:cell&gt;
+							&lt;xf:cell&gt;
+								&lt;a href="{{ link('admin:gamesroom/games/edit', $game) }}" data-xf-click="overlay"&gt;{{ phrase('edit') }}&lt;/a&gt;
+								|
+								&lt;a href="{{ link('admin:gamesroom/games/delete', $game) }}" data-xf-click="overlay"&gt;{{ phrase('delete') }}&lt;/a&gt;
+							&lt;/xf:cell&gt;
+						&lt;/xf:datarow&gt;
+					&lt;/xf:foreach&gt;
+				&lt;/xf:datalist&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;xf:else /&gt;
+	&lt;div class="blockMessage"&gt;{{ phrase('gamesroom_no_games') }}&lt;/div&gt;
+&lt;/xf:if&gt;
+</template>
+
+  
+  <template type="admin" title="gamesroom_game_quick_add" version_id="2001003" version_string="2.1.3">&lt;xf:title&gt;{{ phrase('gamesroom_quick_add') }}&lt;/xf:title&gt;
+
+&lt;xf:form action="{{ link('gamesroom/games/quick-add-save') }}" class="block" ajax="true"&gt;
+	&lt;div class="block-container"&gt;
+		&lt;div class="block-body"&gt;
+			&lt;div class="block-row"&gt;
+				&lt;div class="contentRow"&gt;
+					&lt;div class="contentRow-main contentRow-main--close"&gt;
+						{{ phrase('gamesroom_quick_add_explain') }}
+					&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+			
+			&lt;xf:textboxrow name="title" label="{{ phrase('title') }}" required="true" /&gt;
+			
+			&lt;xf:textboxrow name="embed_url" label="{{ phrase('gamesroom_embed_url') }}" 
+				explain="{{ phrase('gamesroom_embed_url_explain') }}" required="true" /&gt;
+			
+			&lt;xf:selectrow name="category_id" label="{{ phrase('category') }}"&gt;
+				&lt;xf:option value="0"&gt;{{ phrase('none') }}&lt;/xf:option&gt;
+				&lt;xf:foreach loop="$categories" key="$catId" value="$catTitle"&gt;
+					&lt;xf:option value="{$catId}"&gt;{$catTitle}&lt;/xf:option&gt;
+				&lt;/xf:foreach&gt;
+			&lt;/xf:selectrow&gt;
+			
+			&lt;xf:textboxrow name="thumbnail_url" label="{{ phrase('gamesroom_thumbnail_url') }}" 
+				explain="{{ phrase('gamesroom_thumbnail_url_explain') }}" /&gt;
+			
+			&lt;xf:textarearow name="description" label="{{ phrase('description') }}" autosize="true" /&gt;
+			
+			&lt;xf:numberboxrow name="width" value="800" label="{{ phrase('gamesroom_width') }}" min="300" max="1920" /&gt;
+			&lt;xf:numberboxrow name="height" value="600" label="{{ phrase('gamesroom_height') }}" min="300" max="1080" /&gt;
+		&lt;/div&gt;
+		
+		&lt;xf:submitrow sticky="true" icon="save" /&gt;
+	&lt;/div&gt;
+&lt;/xf:form&gt;
+</template>
+
+  
+  <template type="admin" title="gamesroom_game_edit" version_id="2001003" version_string="2.1.3">&lt;xf:title&gt;{{ $game.game_id ? phrase('gamesroom_edit_game') : phrase('gamesroom_add_game') }}&lt;/xf:title&gt;
+
+&lt;xf:form action="{{ link('admin:gamesroom/games/save', $game) }}" class="block" ajax="true"&gt;
+	&lt;div class="block-container"&gt;
+		&lt;div class="block-body"&gt;
+			&lt;xf:textboxrow name="title" value="{$game.title}" label="{{ phrase('title') }}" required="true" /&gt;
+			
+			&lt;xf:selectrow name="category_id" value="{$game.category_id}" label="{{ phrase('category') }}"&gt;
+				&lt;xf:foreach loop="$categories" key="$catId" value="$catTitle"&gt;
+					&lt;xf:option value="{$catId}"&gt;{$catTitle}&lt;/xf:option&gt;
+				&lt;/xf:foreach&gt;
+			&lt;/xf:selectrow&gt;
+			
+			&lt;xf:textarearow name="description" value="{$game.description}" label="{{ phrase('description') }}" autosize="true" /&gt;
+			
+			&lt;xf:textboxrow name="embed_url" value="{$game.embed_url}" label="{{ phrase('gamesroom_embed_url') }}" 
+				explain="{{ phrase('gamesroom_embed_url_explain') }}" required="true" /&gt;
+			
+			&lt;xf:textboxrow name="thumbnail_url" value="{$game.thumbnail_url}" label="{{ phrase('gamesroom_thumbnail_url') }}" 
+				explain="{{ phrase('gamesroom_thumbnail_url_explain') }}" /&gt;
+			
+			&lt;xf:selectrow name="distributor" value="{$game.distributor}" label="{{ phrase('gamesroom_distributor') }}"&gt;
+				&lt;xf:option value="gamepix"&gt;GamePix&lt;/xf:option&gt;
+				&lt;xf:option value="gamedistribution"&gt;GameDistribution&lt;/xf:option&gt;
+				&lt;xf:option value="gamemonetize"&gt;GameMonetize&lt;/xf:option&gt;
+				&lt;xf:option value="custom"&gt;{{ phrase('custom') }}&lt;/xf:option&gt;
+			&lt;/xf:selectrow&gt;
+			
+			&lt;xf:numberboxrow name="width" value="{$game.width}" label="{{ phrase('gamesroom_width') }}" min="300" max="1920" /&gt;
+			&lt;xf:numberboxrow name="height" value="{$game.height}" label="{{ phrase('gamesroom_height') }}" min="300" max="1080" /&gt;
+			
+			&lt;xf:numberboxrow name="display_order" value="{$game.display_order}" label="{{ phrase('display_order') }}" min="0" /&gt;
+			
+			&lt;xf:checkboxrow label="{{ phrase('options') }}"&gt;
+				&lt;xf:option name="active" selected="{$game.active}" label="{{ phrase('active') }}" /&gt;
+			&lt;/xf:checkboxrow&gt;
+		&lt;/div&gt;
+		
+		&lt;xf:submitrow sticky="true" icon="save" /&gt;
+	&lt;/div&gt;
+&lt;/xf:form&gt;
+</template>
+
+  
+  <template type="admin" title="gamesroom_game_delete" version_id="2001003" version_string="2.1.3">&lt;xf:title&gt;{{ phrase('confirm_deletion') }}&lt;/xf:title&gt;
+
+&lt;xf:form action="{{ link('gamesroom/games/delete', $game) }}" class="block" ajax="true"&gt;
+	&lt;div class="block-container"&gt;
+		&lt;div class="block-body"&gt;
+			&lt;div class="blockMessage blockMessage--important blockMessage--iconic"&gt;
+				{{ phrase('please_confirm_deletion_of_x', {'title': $game.title}) }}
+			&lt;/div&gt;
+		&lt;/div&gt;
+		
+		&lt;xf:submitrow sticky="true" icon="delete" /&gt;
+	&lt;/div&gt;
+&lt;/xf:form&gt;
+</template>
+
+  
+  <template type="admin" title="gamesroom_category_list" version_id="2001003" version_string="2.1.3">&lt;xf:title&gt;{{ phrase('gamesroom_categories') }}&lt;/xf:title&gt;
+
+&lt;div class="block"&gt;
+	&lt;div class="block-container"&gt;
+		&lt;div class="block-body"&gt;
+			&lt;xf:button href="{{ link('admin:gamesroom/categories/add') }}" icon="add" overlay="true"&gt;
+				{{ phrase('gamesroom_add_category') }}
+			&lt;/xf:button&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;xf:if is="count($categories)"&gt;
+	&lt;div class="block"&gt;
+		&lt;div class="block-container"&gt;
+			&lt;h3 class="block-header"&gt;{{ phrase('gamesroom_categories') }}&lt;/h3&gt;
+			&lt;div class="block-body"&gt;
+				&lt;xf:datalist&gt;
+					&lt;xf:datarow rowtype="header"&gt;
+						&lt;xf:cell&gt;{{ phrase('title') }}&lt;/xf:cell&gt;
+						&lt;xf:cell&gt;{{ phrase('gamesroom_category_icon') }}&lt;/xf:cell&gt;
+						&lt;xf:cell&gt;{{ phrase('display_order') }}&lt;/xf:cell&gt;
+						&lt;xf:cell&gt;{{ phrase('gamesroom_games') }}&lt;/xf:cell&gt;
+						&lt;xf:cell&gt;{{ phrase('status') }}&lt;/xf:cell&gt;
+						&lt;xf:cell&gt;&lt;/xf:cell&gt;
+					&lt;/xf:datarow&gt;
+					
+					&lt;xf:foreach loop="$categories" value="$category"&gt;
+						&lt;xf:datarow&gt;
+							&lt;xf:cell&gt;&lt;strong&gt;{$category.title}&lt;/strong&gt;&lt;/xf:cell&gt;
+							&lt;xf:cell&gt;&lt;i class="fa {$category.icon}"&gt;&lt;/i&gt; {$category.icon}&lt;/xf:cell&gt;
+							&lt;xf:cell&gt;{$category.display_order}&lt;/xf:cell&gt;
+							&lt;xf:cell&gt;{$category.game_count}&lt;/xf:cell&gt;
+							&lt;xf:cell&gt;
+								&lt;xf:if is="$category.active"&gt;
+									&lt;span class="label label--green"&gt;{{ phrase('active') }}&lt;/span&gt;
+								&lt;xf:else /&gt;
+									&lt;span class="label label--red"&gt;{{ phrase('inactive') }}&lt;/span&gt;
+								&lt;/xf:if&gt;
+							&lt;/xf:cell&gt;
+							&lt;xf:cell&gt;
+								&lt;a href="{{ link('admin:gamesroom/categories/edit', $category) }}" data-xf-click="overlay"&gt;{{ phrase('edit') }}&lt;/a&gt;
+								|
+								&lt;a href="{{ link('admin:gamesroom/categories/delete', $category) }}" data-xf-click="overlay"&gt;{{ phrase('delete') }}&lt;/a&gt;
+							&lt;/xf:cell&gt;
+						&lt;/xf:datarow&gt;
+					&lt;/xf:foreach&gt;
+				&lt;/xf:datalist&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;xf:else /&gt;
+	&lt;div class="blockMessage"&gt;{{ phrase('no_items_to_display') }}&lt;/div&gt;
+&lt;/xf:if&gt;
+</template>
+
+  
+  <template type="admin" title="gamesroom_category_edit" version_id="2001003" version_string="2.1.3">&lt;xf:title&gt;{{ $category.category_id ? phrase('gamesroom_edit_category') : phrase('gamesroom_add_category') }}&lt;/xf:title&gt;
+
+&lt;xf:form action="{{ link('admin:gamesroom/categories/save', $category) }}" class="block" ajax="true"&gt;
+	&lt;div class="block-container"&gt;
+		&lt;div class="block-body"&gt;
+			&lt;xf:textboxrow name="title" value="{$category.title}" label="{{ phrase('title') }}" required="true" /&gt;
+			
+			&lt;xf:textboxrow name="description" value="{$category.description}" label="{{ phrase('description') }}" /&gt;
+			
+			&lt;xf:textboxrow name="icon" value="{$category.icon}" label="{{ phrase('gamesroom_category_icon') }}" 
+				explain="{{ phrase('gamesroom_category_icon_explain') }}" /&gt;
+			
+			&lt;xf:numberboxrow name="display_order" value="{$category.display_order}" label="{{ phrase('display_order') }}" min="0" /&gt;
+			
+			&lt;xf:checkboxrow label="{{ phrase('options') }}"&gt;
+				&lt;xf:option name="active" selected="{$category.active}" label="{{ phrase('active') }}" /&gt;
+			&lt;/xf:checkboxrow&gt;
+		&lt;/div&gt;
+		
+		&lt;xf:submitrow sticky="true" icon="save" /&gt;
+	&lt;/div&gt;
+&lt;/xf:form&gt;
+</template>
+
+  
+  <template type="admin" title="gamesroom_category_delete" version_id="2001003" version_string="2.1.3">&lt;xf:title&gt;{{ phrase('confirm_deletion') }}&lt;/xf:title&gt;
+
+&lt;xf:form action="{{ link('gamesroom/categories/delete', $category) }}" class="block" ajax="true"&gt;
+	&lt;div class="block-container"&gt;
+		&lt;div class="block-body"&gt;
+			&lt;div class="blockMessage blockMessage--important blockMessage--iconic"&gt;
+				{{ phrase('please_confirm_deletion_of_x', {'title': $category.title}) }}
+			&lt;/div&gt;
+			
+			&lt;div class="blockMessage"&gt;
+				&lt;strong&gt;{{ phrase('category') }}:&lt;/strong&gt; {$category.title}&lt;br /&gt;
+				&lt;strong&gt;{{ phrase('gamesroom_games') }}:&lt;/strong&gt; {$category.game_count}
+			&lt;/div&gt;
+		&lt;/div&gt;
+		
+		&lt;xf:submitrow sticky="true" icon="delete" /&gt;
+	&lt;/div&gt;
+&lt;/xf:form&gt;
+</template>
+
+  
+  <template type="public" title="gamesroom_widget_featured" version_id="2005000" version_string="2.5.0">&lt;div class="block"&gt;
+	&lt;div class="block-container"&gt;
+		&lt;h3 class="block-minorHeader"&gt;{$title}&lt;/h3&gt;
+		&lt;div class="block-body"&gt;
+			&lt;xf:if is="count($games)"&gt;
+				&lt;xf:foreach loop="$games" value="$game"&gt;
+					&lt;div class="contentRow" style="margin-bottom: 0.5rem;"&gt;
+						&lt;div class="contentRow-figure"&gt;
+							&lt;a href="{{ link('gamesroom/play', $game) }}"&gt;
+								&lt;img src="{$game.thumbnail_url}" alt="{$game.title}" style="width: 60px; height: 45px; object-fit: cover; border-radius: 4px;" /&gt;
+							&lt;/a&gt;
+						&lt;/div&gt;
+						&lt;div class="contentRow-main"&gt;
+							&lt;h4 class="contentRow-title" style="margin: 0;"&gt;
+								&lt;a href="{{ link('gamesroom/play', $game) }}"&gt;{$game.title}&lt;/a&gt;
+							&lt;/h4&gt;
+							&lt;div class="contentRow-snippet" style="font-size: 0.8125rem; color: #888;"&gt;
+								{$game.play_count} plays
+							&lt;/div&gt;
+						&lt;/div&gt;
+					&lt;/div&gt;
+				&lt;/xf:foreach&gt;
+			&lt;xf:else /&gt;
+				&lt;div class="blockMessage"&gt;No featured games&lt;/div&gt;
+			&lt;/xf:if&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</template><template type="public" title="gamesroom_widget_most_played" version_id="2005000" version_string="2.5.0">&lt;div class="block"&gt;
+	&lt;div class="block-container"&gt;
+		&lt;h3 class="block-minorHeader"&gt;{$title}&lt;/h3&gt;
+		&lt;div class="block-body"&gt;
+			&lt;xf:if is="count($games)"&gt;
+				&lt;xf:foreach loop="$games" value="$game"&gt;
+					&lt;div class="contentRow" style="margin-bottom: 0.5rem;"&gt;
+						&lt;div class="contentRow-figure"&gt;
+							&lt;a href="{{ link('gamesroom/play', $game) }}"&gt;
+								&lt;img src="{$game.thumbnail_url}" alt="{$game.title}" style="width: 60px; height: 45px; object-fit: cover; border-radius: 4px;" /&gt;
+							&lt;/a&gt;
+						&lt;/div&gt;
+						&lt;div class="contentRow-main"&gt;
+							&lt;h4 class="contentRow-title" style="margin: 0;"&gt;
+								&lt;a href="{{ link('gamesroom/play', $game) }}"&gt;{$game.title}&lt;/a&gt;
+							&lt;/h4&gt;
+							&lt;div class="contentRow-snippet" style="font-size: 0.8125rem; color: #888;"&gt;
+								{$game.play_count} plays
+							&lt;/div&gt;
+						&lt;/div&gt;
+					&lt;/div&gt;
+				&lt;/xf:foreach&gt;
+			&lt;xf:else /&gt;
+				&lt;div class="blockMessage"&gt;No games played yet&lt;/div&gt;
+			&lt;/xf:if&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</template><template type="public" title="gamesroom_widget_latest_played" version_id="2005000" version_string="2.5.0">&lt;div class="block"&gt;
+	&lt;div class="block-container"&gt;
+		&lt;h3 class="block-minorHeader"&gt;{$title}&lt;/h3&gt;
+		&lt;div class="block-body"&gt;
+			&lt;xf:if is="count($games)"&gt;
+				&lt;xf:foreach loop="$games" value="$game"&gt;
+					&lt;div class="contentRow" style="margin-bottom: 0.5rem;"&gt;
+						&lt;div class="contentRow-figure"&gt;
+							&lt;a href="{{ link('gamesroom/play', $game) }}"&gt;
+								&lt;img src="{$game.thumbnail_url}" alt="{$game.title}" style="width: 60px; height: 45px; object-fit: cover; border-radius: 4px;" /&gt;
+							&lt;/a&gt;
+						&lt;/div&gt;
+						&lt;div class="contentRow-main"&gt;
+							&lt;h4 class="contentRow-title" style="margin: 0;"&gt;
+								&lt;a href="{{ link('gamesroom/play', $game) }}"&gt;{$game.title}&lt;/a&gt;
+							&lt;/h4&gt;
+							&lt;div class="contentRow-snippet" style="font-size: 0.8125rem; color: #888;"&gt;
+								&lt;xf:date time="{$game.last_played}" /&gt;
+							&lt;/div&gt;
+						&lt;/div&gt;
+					&lt;/div&gt;
+				&lt;/xf:foreach&gt;
+			&lt;xf:else /&gt;
+				&lt;div class="blockMessage"&gt;No recent plays&lt;/div&gt;
+			&lt;/xf:if&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</template>
+
+<template type="admin" title="gamesroom_browse_catalog" version_id="2005000" version_string="2.5.0">&lt;xf:title&gt;Browse Games&lt;/xf:title&gt;
+
+&lt;div class="block"&gt;
+	&lt;div class="block-container"&gt;
+		&lt;div class="block-body"&gt;
+			&lt;!-- Category Filter and Search --&gt;
+			&lt;div class="gamesroom-filterBar"&gt;
+				&lt;select name="category" class="input" class="gamesroom-categorySelect" onchange="window.location.href='admin.php?gamesroom/browse' + (this.value ? '&amp;category=' + this.value : '') + '&lt;xf:if is="$searchTerm"&gt;&amp;search={$searchTerm}&lt;/xf:if&gt;'"&gt;
+					&lt;option value=""&gt;All Categories&lt;/option&gt;
+					&lt;xf:foreach loop="$apiCategories" key="$catSlug" value="$catName"&gt;
+						&lt;option value="{$catSlug}" &lt;xf:if is="$selectedCategory == $catSlug"&gt;selected&lt;/xf:if&gt;&gt;{$catName}&lt;/option&gt;
+					&lt;/xf:foreach&gt;
+				&lt;/select&gt;
+				
+				&lt;xf:form action="{{ link('admin:gamesroom/browse') }}" class="inputGroup" class="gamesroom-searchBarInline"&gt;
+					&lt;input type="hidden" name="category" value="{$selectedCategory}" /&gt;
+					&lt;input type="text" name="search" class="input" placeholder="Search games..." value="{$searchTerm}" class="gamesroom-searchInputInline" /&gt;
+					&lt;span class="inputGroup-splitter"&gt;&lt;/span&gt;
+					&lt;button type="submit" class="button button--primary"&gt;Search&lt;/button&gt;
+				&lt;/xf:form&gt;
+			&lt;/div&gt;
+
+			&lt;!-- Games Grid --&gt;
+			&lt;xf:if is="count($games)"&gt;
+				&lt;div class="gamesroom-grid gamesroom-grid--large"&gt;
+					&lt;xf:foreach loop="$games" value="$game"&gt;
+						&lt;div class="gamesroom-gameCard--admin" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'"&gt;
+							&lt;!-- Game Image --&gt;
+							&lt;div class="gamesroom-gameThumbnail--ratio"&gt;
+								&lt;img src="{$game.thumbnail}" alt="{$game.title}" class="gamesroom-gameThumbnailImg--absolute" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='&lt;div style=\'position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; color:#999;\'&gt;&lt;i class=\'fa fa-gamepad fa-3x\'&gt;&lt;/i&gt;&lt;/div&gt;'" /&gt;
+							&lt;/div&gt;
+							
+							&lt;!-- Game Info --&gt;
+							&lt;div class="gamesroom-gameCardBody"&gt;
+								&lt;h3 class="gamesroom-gameTitle--admin"&gt;{$game.title}&lt;/h3&gt;
+								&lt;p class="gamesroom-gameDescription--admin"&gt;{$game.description}&lt;/p&gt;
+								
+								&lt;xf:if is="$game.is_imported"&gt;
+									&lt;div class="gamesroom-importedBadge"&gt;
+										&lt;i class="fa fa-check"&gt;&lt;/i&gt; Already Imported
+									&lt;/div&gt;
+								&lt;xf:else /&gt;
+									&lt;!-- Import Form --&gt;
+									&lt;xf:form action="{{ link('gamesroom/browse/import') }}" ajax="true"&gt;
+										&lt;input type="hidden" name="game_url" value="{$game.url}" /&gt;
+										&lt;input type="hidden" name="game_title" value="{$game.title}" /&gt;
+										&lt;input type="hidden" name="game_description" value="{$game.description}" /&gt;
+										&lt;input type="hidden" name="game_thumbnail" value="{$game.thumbnail}" /&gt;
+										&lt;input type="hidden" name="game_width" value="{$game.width}" /&gt;
+										&lt;input type="hidden" name="game_height" value="{$game.height}" /&gt;
+										
+										&lt;div class="gamesroom-importActions"&gt;
+											&lt;select name="category_id" class="input" class="gamesroom-importCategorySelect"&gt;
+												&lt;option value="0"&gt;Select category&lt;/option&gt;
+												&lt;xf:foreach loop="$categories" key="$catId" value="$catTitle"&gt;
+													&lt;option value="{$catId}"&gt;{$catTitle}&lt;/option&gt;
+												&lt;/xf:foreach&gt;
+											&lt;/select&gt;
+										&lt;/div&gt;
+										
+										&lt;div class="gamesroom-importForm"&gt;
+											&lt;label class="gamesroom-importButton"&gt;
+												&lt;input type="checkbox" name="featured" value="1" /&gt; Featured
+											&lt;/label&gt;
+										&lt;/div&gt;
+										
+										&lt;button type="submit" class="button button--primary" &gt;
+											&lt;i class="fa fa-download"&gt;&lt;/i&gt; Import Game
+										&lt;/button&gt;
+									&lt;/xf:form&gt;
+								&lt;/xf:if&gt;
+							&lt;/div&gt;
+						&lt;/div&gt;
+					&lt;/xf:foreach&gt;
+				&lt;/div&gt;
+				
+				&lt;!-- Pagination --&gt;
+				&lt;xf:if is="$total &gt; $perPage"&gt;
+					&lt;div class="block-footer"&gt;
+						&lt;xf:macro template="page_macros" name="paging" arg-page="{$page}" arg-perPage="{$perPage}" arg-total="{$total}" arg-route="gamesroom/browse" arg-params="{{ {'category': $selectedCategory, 'search': $searchTerm} }}" /&gt;
+					&lt;/div&gt;
+				&lt;/xf:if&gt;
+			&lt;xf:else /&gt;
+				&lt;div class="blockMessage"&gt;No games found matching your criteria.&lt;/div&gt;
+			&lt;/xf:if&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</template>
+
+<template type="public" title="gamesroom_index" version_id="2005000" version_string="2.5.0">&lt;xf:title&gt;Games&lt;/xf:title&gt;
+
+&lt;xf:page option="containerClasses"&gt;p-containerFluid--fixedWidth&lt;/xf:page&gt;
+
+&lt;div class="block"&gt;
+	&lt;div class="block-container"&gt;
+		&lt;h2 class="block-header"&gt;
+			&lt;span class="block-header-text"&gt;All Games&lt;/span&gt;
+		&lt;/h2&gt;
+		
+		&lt;div class="block-body"&gt;
+			&lt;!-- Category Filter &amp; Search --&gt;
+			&lt;div class="gamesroom-searchBar"&gt;
+				&lt;div class="gamesroom-categoryNav"&gt;
+					&lt;div class="buttonGroup"&gt;
+						&lt;a href="{{ link('gamesroom') }}" class="button{{ !$categoryId ? ' button--primary' : '' }}"&gt;
+							All Games
+						&lt;/a&gt;
+						&lt;xf:foreach loop="$categories" value="$category"&gt;
+							&lt;a href="{{ link('gamesroom', null, {'category_id': $category.category_id}) }}" 
+								class="button{{ $categoryId == $category.category_id ? ' button--primary' : '' }}"&gt;
+								{$category.title}
+							&lt;/a&gt;
+						&lt;/xf:foreach&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+				
+				&lt;!-- Search Box --&gt;
+				&lt;xf:form action="{{ link('gamesroom') }}" class="block-formRow" class="gamesroom-searchForm"&gt;
+					&lt;xf:if is="$categoryId"&gt;
+						&lt;input type="hidden" name="category_id" value="{$categoryId}" /&gt;
+					&lt;/xf:if&gt;
+					&lt;div class="gamesroom-searchFormInner"&gt;
+						&lt;input type="text" name="search" class="input" placeholder="Search games..." value="{$searchTerm}" class="gamesroom-searchInput" /&gt;
+						&lt;button type="submit" class="button button--primary"&gt;
+							&lt;i class="fa fa-search"&gt;&lt;/i&gt; Search
+						&lt;/button&gt;
+					&lt;/div&gt;
+				&lt;/xf:form&gt;
+			&lt;/div&gt;
+			
+			&lt;!-- Games Grid --&gt;
+			&lt;xf:if is="count($games)"&gt;
+				&lt;div class="gamesroom-grid"&gt;
+					&lt;xf:foreach loop="$games" value="$game"&gt;
+						&lt;div class="contentRow-figure" class="gamesroom-gameCard"&gt;
+							&lt;a href="{{ link('gamesroom/play', $game) }}" &gt;
+								&lt;div class="gamesroom-gameThumbnail"&gt;
+									&lt;img src="{$game.thumbnail_url}" alt="{$game.title}" class="gamesroom-gameThumbnailImg" loading="lazy" /&gt;
+								&lt;/div&gt;
+								
+								&lt;div class="gamesroom-gameCardBody"&gt;
+									&lt;h3 class="gamesroom-gameTitle"&gt;
+										{$game.title}
+									&lt;/h3&gt;
+									&lt;p class="gamesroom-gameDescription"&gt;
+										{$game.description}
+									&lt;/p&gt;
+									&lt;div class="gamesroom-gameMeta"&gt;
+										&lt;i class="fa fa-play-circle"&gt;&lt;/i&gt; {$game.play_count} plays
+										&lt;xf:if is="$game.Category"&gt;
+											&lt;span class="gamesroom-gameMetaIcon"&gt;
+												&lt;i class="fa fa-tag"&gt;&lt;/i&gt; {$game.Category.title}
+											&lt;/span&gt;
+										&lt;/xf:if&gt;
+									&lt;/div&gt;
+								&lt;/div&gt;
+							&lt;/a&gt;
+						&lt;/div&gt;
+					&lt;/xf:foreach&gt;
+				&lt;/div&gt;
+				
+				&lt;!-- XenForo Pagination --&gt;
+				&lt;div class="block-outer block-outer--after"&gt;
+					&lt;xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}" 
+						link="gamesroom"
+						params="{{ $categoryId ? {'category_id': $categoryId} : {} }}" /&gt;
+				&lt;/div&gt;
+			&lt;xf:else /&gt;
+				&lt;div class="blockMessage"&gt;
+					&lt;xf:if is="$categoryId"&gt;
+						No games found in this category. Try browsing all games or select a different category.
+					&lt;xf:else /&gt;
+						No games available yet. Check back soon!
+					&lt;/xf:if&gt;
+				&lt;/div&gt;
+			&lt;/xf:if&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;xf:sidebar&gt;
+	&lt;!-- Widgets will be inserted here by XenForo widget system --&gt;
+	&lt;!-- Admins can add: Featured Games, Most Played, Latest Played widgets --&gt;
+	&lt;!-- Widgets added via Appearance &gt; Widgets --&gt;
+&lt;/xf:sidebar&gt;
+</template>
+
+<template type="public" title="gamesroom_play" version_id="2005000" version_string="2.5.0">&lt;xf:title&gt;{$game.title}&lt;/xf:title&gt;
+
+&lt;div class="block"&gt;
+	&lt;div class="block-container"&gt;
+		&lt;div class="block-body"&gt;
+			&lt;!-- Game Header --&gt;
+			&lt;div class="gamesroom-playHeader"&gt;
+				&lt;h1 class="block-header" class="gamesroom-playTitle"&gt;{$game.title}&lt;/h1&gt;
+				&lt;div class="gamesroom-playMeta"&gt;
+					&lt;xf:if is="$game.Category"&gt;
+						&lt;span class="gamesroom-playCategory"&gt;
+							{$game.Category.title}
+						&lt;/span&gt;
+					&lt;/xf:if&gt;
+					&lt;span&gt;&lt;i class="fa fa-play"&gt;&lt;/i&gt; {$game.play_count|number} plays&lt;/span&gt;
+				&lt;/div&gt;
+				&lt;xf:if is="$game.description"&gt;
+					&lt;p class="gamesroom-playDescription"&gt;{$game.description}&lt;/p&gt;
+				&lt;/xf:if&gt;
+			&lt;/div&gt;
+
+			&lt;!-- Game Iframe Container --&gt;
+			&lt;div class="gamesroom-gameEmbed"&gt;
+				&lt;iframe 
+					src="{$game.embed_url}" 
+					class="gamesroom-gameEmbedIframe"
+					frameborder="0"
+					scrolling="no"
+					allowfullscreen
+					allow="autoplay; fullscreen; gamepad; microphone; camera"
+				&gt;&lt;/iframe&gt;
+			&lt;/div&gt;
+
+			&lt;!-- Fullscreen Button --&gt;
+			&lt;div class="gamesroom-relatedSection"&gt;
+				&lt;a href="{$game.embed_url}" target="_blank" class="button button--primary"&gt;
+					&lt;i class="fa fa-external-link"&gt;&lt;/i&gt; Open in New Window
+				&lt;/a&gt;
+			&lt;/div&gt;
+
+			&lt;!-- Related Games --&gt;
+			&lt;xf:if is="$relatedGames|count"&gt;
+				&lt;div class="block-header"&gt;
+					&lt;h3 class="block-textHeader"&gt;Related Games&lt;/h3&gt;
+				&lt;/div&gt;
+				&lt;div class="gamesroom-grid gamesroom-grid--small"&gt;
+					&lt;xf:foreach loop="$relatedGames" value="$relatedGame"&gt;
+						&lt;a href="{{ link('gamesroom/play', $relatedGame) }}" class="gamesroom-gameCard--related" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'"&gt;
+							&lt;div class="gamesroom-gameThumbnail--relatedRatio"&gt;
+								&lt;img src="{$relatedGame.thumbnail_url}" alt="{$relatedGame.title}" class="gamesroom-gameThumbnailImg--absolute" loading="lazy" onerror="this.style.display='none'" /&gt;
+							&lt;/div&gt;
+							&lt;div class="gamesroom-gameCardBody--related"&gt;
+								&lt;div class="gamesroom-gameTitle--related"&gt;{$relatedGame.title}&lt;/div&gt;
+								&lt;div class="gamesroom-gameMeta--related"&gt;
+									&lt;i class="fa fa-play"&gt;&lt;/i&gt; {$relatedGame.play_count|number}
+								&lt;/div&gt;
+							&lt;/div&gt;
+						&lt;/a&gt;
+					&lt;/xf:foreach&gt;
+				&lt;/div&gt;
+			&lt;/xf:if&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;xf:sidebar&gt;
+	&lt;!-- Widgets added via Appearance &gt; Widgets --&gt;
+&lt;/xf:sidebar&gt;</template>
+<template title="gamesroom.less" version_id="1000000" version_string="1.0.0" type="public">/* ============================================
+   Gamesroom Addon Styles
+   ============================================ */
+
+/* Grid Layouts
+   ========================================== */
+
+.gamesroom-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.gamesroom-grid--large {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.gamesroom-grid--small {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+
+/* Search &amp; Filter Bar
+   ========================================== */
+
+.gamesroom-searchBar {
+    margin-bottom: 2rem;
+}
+
+.gamesroom-searchForm {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.gamesroom-searchFormInner {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.gamesroom-searchInput {
+    flex: 1;
+}
+
+.gamesroom-filterBar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    align-items: center;
+}
+
+.gamesroom-categorySelect {
+    width: 200px;
+}
+
+.gamesroom-searchBarInline {
+    flex: 1;
+    max-width: 500px;
+}
+
+.gamesroom-searchInputInline {
+    flex: 1;
+}
+
+
+/* Game Cards
+   ========================================== */
+
+.gamesroom-gameCard {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+    display: block;
+    
+    &amp;:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+}
+
+.gamesroom-gameCard--admin {
+    background: #f8f9fa;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    
+    &amp;:hover {
+        transform: translateY(-2px);
+    }
+}
+
+.gamesroom-gameCard--related {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    background: #f5f5f5;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: transform 0.2s;
+    
+    &amp;:hover {
+        transform: translateY(-2px);
+    }
+}
+
+
+/* Game Thumbnails
+   ========================================== */
+
+.gamesroom-gameThumbnail {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 140px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.gamesroom-gameThumbnail--ratio {
+    position: relative;
+    padding-bottom: 66.67%;
+    background: #e9ecef;
+    overflow: hidden;
+}
+
+.gamesroom-gameThumbnail--relatedRatio {
+    position: relative;
+    padding-bottom: 66.67%;
+    background: #ddd;
+    overflow: hidden;
+}
+
+.gamesroom-gameThumbnailImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gamesroom-gameThumbnailImg--absolute {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* Game Card Content
+   ========================================== */
+
+.gamesroom-gameCardBody {
+    padding: 1rem;
+}
+
+.gamesroom-gameCardBody--related {
+    padding: 0.75rem;
+}
+
+.gamesroom-gameTitle {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.3;
+    min-height: 2.6em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.gamesroom-gameTitle--admin {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.gamesroom-gameTitle--related {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.gamesroom-gameDescription {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: #666;
+    line-height: 1.4;
+    min-height: 2.2em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.gamesroom-gameDescription--admin {
+    margin: 0 0 1rem 0;
+    font-size: 0.875rem;
+    color: #666;
+    height: 2.5em;
+    overflow: hidden;
+}
+
+.gamesroom-gameMeta {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: #888;
+}
+
+.gamesroom-gameMeta--related {
+    font-size: 0.75rem;
+    color: #666;
+}
+
+.gamesroom-gameMetaIcon {
+    margin-left: 0.5rem;
+}
+
+
+/* Game Play Page
+   ========================================== */
+
+.gamesroom-playHeader {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: #f5f5f5;
+    border-radius: 4px;
+}
+
+.gamesroom-playTitle {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+}
+
+.gamesroom-playMeta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    font-size: 0.875rem;
+    color: #666;
+}
+
+.gamesroom-playCategory {
+    background: #667eea;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 3px;
+    font-weight: 500;
+}
+
+.gamesroom-playDescription {
+    margin: 0.75rem 0 0 0;
+    color: #444;
+}
+
+.gamesroom-gameEmbed {
+    position: relative;
+    width: 100%;
+    padding-bottom: 75%;
+    background: #000;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.gamesroom-gameEmbedIframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.gamesroom-relatedSection {
+    margin-bottom: 1.5rem;
+}
+
+
+/* Admin Browse Page
+   ========================================== */
+
+.gamesroom-importForm {
+    margin-bottom: 0.5rem;
+}
+
+.gamesroom-importCategorySelect {
+    width: 100%;
+    font-size: 0.875rem;
+}
+
+.gamesroom-importActions {
+    margin-bottom: 0.5rem;
+}
+
+.gamesroom-importButton {
+    font-size: 0.875rem;
+    width: 100%;
+}
+
+.gamesroom-importedBadge {
+    padding: 0.5rem;
+    background: #28a745;
+    color: white;
+    text-align: center;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+
+/* Category Navigation
+   ========================================== */
+
+.gamesroom-categoryNav {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+
+/* Utilities
+   ========================================== */
+
+.gamesroom-noResults {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
+
+/* Responsive Adjustments
+   ========================================== */
+
+@media (max-width: 768px) {
+    .gamesroom-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+    
+    .gamesroom-grid--large {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+    
+    .gamesroom-filterBar {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .gamesroom-categorySelect {
+        width: 100%;
+    }
+    
+    .gamesroom-searchBarInline {
+        max-width: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .gamesroom-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+    
+    .gamesroom-playMeta {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+}
+</template><template type="admin" title="gamesroom_game_list" version_id="1000000" version_string="1.0.0">&lt;xf:title&gt;Manage Games&lt;/xf:title&gt;
+
+&lt;div class="block"&gt;
+	&lt;div class="block-container"&gt;
+		&lt;div class="block-body"&gt;
+			&lt;xf:if is="count($games)"&gt;
+				&lt;div class="structItemContainer"&gt;
+					&lt;xf:foreach loop="$games" value="$game"&gt;
+						&lt;div class="structItem"&gt;
+							&lt;div class="structItem-cell structItem-cell--main"&gt;
+								&lt;a href="{{ link('admin:gamesroom/games/edit', $game) }}"&gt;
+									{$game.title}
+								&lt;/a&gt;
+								&lt;div class="structItem-minor"&gt;
+									Category: {$game.Category.title} | Plays: {$game.play_count}
+								&lt;/div&gt;
+							&lt;/div&gt;
+							&lt;div class="structItem-cell structItem-cell--meta"&gt;
+								&lt;a href="{{ link('admin:gamesroom/games/delete', $game) }}"&gt;Delete&lt;/a&gt;
+							&lt;/div&gt;
+						&lt;/div&gt;
+					&lt;/xf:foreach&gt;
+				&lt;/div&gt;
+			&lt;xf:else /&gt;
+				&lt;div class="blockMessage"&gt;No games found.&lt;/div&gt;
+			&lt;/xf:if&gt;
+		&lt;/div&gt;
+		
+		&lt;xf:if is="$total &gt; $perPage"&gt;
+			&lt;div class="block-footer"&gt;
+				&lt;xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}" link="gamesroom/games" /&gt;
+			&lt;/div&gt;
+		&lt;/xf:if&gt;
+		
+		&lt;div class="block-footer"&gt;
+			&lt;a href="{{ link('admin:gamesroom/games/add') }}" class="button"&gt;
+				&lt;xf:fa icon="fa-plus" /&gt; Add Game
+			&lt;/a&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</template></templates>
