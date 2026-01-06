@@ -20,9 +20,23 @@ class Index extends AbstractController
         $searchTerm = $this->filter('search', 'str');
         
         // Pagination
+	$viewParams = [
+            'games' => $games,
+            'categories' => $categories,
+            'featuredGames' => $featuredGames,
+            'selectedCategory' => $categoryId,
+            'currentSort' => $sort,
+            'searchTerm' => $searchTerm,
+            
+            // Pagination
+            'page' => $page,
+            'perPage' => $perPage,
+            'total' => $total
+        ];
+
         $page = $this->filterPage();
         $perPage = 12; // Games per page
-        
+	
         // Valid sort options
         $validSorts = ['title_asc', 'title_desc', 'plays', 'recent'];
         if (!in_array($sort, $validSorts)) {
@@ -74,17 +88,37 @@ class Index extends AbstractController
             ->order('title', 'ASC')
             ->fetch();
         
-        // Get featured games (top 3 most played, no featured column needed)
+       // Get featured games (top 3 most played, no featured column needed)
         $featuredGames = \XF::finder('IdleChatter\Gamesroom:Game')
             ->where('active', 1)
             ->with('Category')
             ->order('play_count', 'DESC')
             ->limit(4)
             ->fetch();
-        
+
+	// $db = \XF::db();
+
+	// Pick 4 random IDs first
+	//	$ids = $db->fetchAllColumn("
+    	//	SELECT game_id
+    	//	FROM xf_gamesroom_game
+   	//	WHERE active = 1
+    	//	ORDER BY RAND()
+  	//	 LIMIT 4
+	//");
+
+	// Then fetch the entities (keeps relations like Category)
+	//	$randomGames = $ids
+    	//	? \XF::finder('IdleChatter\Gamesroom:Game')
+       	//	 ->where('game_id', $ids)
+        //	->with('Category')
+      	//	  ->fetch()
+    	//: [];
+       
         $viewParams = [
             'games' => $games,
             'categories' => $categories,
+	        'randomGames' => $randomGames,
             'featuredGames' => $featuredGames,
             'selectedCategory' => $categoryId,
             'currentSort' => $sort,
