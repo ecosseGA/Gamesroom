@@ -27,7 +27,8 @@ class LatestPlayed extends AbstractWidget
 
 		$viewParams = [
 			'title' => $this->getTitle() ?: \XF::phrase('gamesroom_latest_played'),
-			'games' => $games
+			'games' => $games,
+			'last_played' => $last_played
 		];
 		
 		return $this->renderer('gamesroom_widget_latest_played', $viewParams);
