@@ -36,15 +36,14 @@ class Game extends Repository
     }
     
     public function getFeaturedGames($limit = 10)
-    {
-        // Return most played games since featured column doesn't exist
-        return $this->finder('IdleChatter\Gamesroom:Game')
-            ->where('active', 1)
-            ->order('play_count', 'DESC')
-            ->limit($limit)
-            ->fetch();
-    }
-    
+{
+    return $this->finder('IdleChatter\Gamesroom:Game')
+        ->where('active', 1)
+        ->where('is_featured', 1)
+        ->order('display_order')
+        ->limit($limit)
+        ->fetch();
+}    
     public function getMostPlayedGames($limit = 10)
     {
         return $this->finder('IdleChatter\Gamesroom:Game')
@@ -75,7 +74,7 @@ class Game extends Repository
         return $finder;
     }
     
-    public function getRecentGames($limit = 10)
+    public function getRecentGames($limit = 5)
     {
         return $this->finder('IdleChatter\Gamesroom:Game')
             ->where('active', 1)
