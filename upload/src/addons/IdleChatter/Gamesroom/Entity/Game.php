@@ -47,8 +47,8 @@ class Game extends Entity
             'height' => ['type' => self::UINT, 'default' => 600],
             'display_order' => ['type' => self::UINT, 'default' => 10],
             'active' => ['type' => self::BOOL, 'default' => true],
-            'play_count' => ['type' => self::UINT, 'default' => 0],
-            'create_date' => ['type' => self::UINT, 'default' => \XF::$time],
+	    'is_featured' => ['type' => self::BOOL, 'default' => false],  // ADD THIS LINE
+	    'play_count' => ['type' => self::UINT, 'default' => 0],            'create_date' => ['type' => self::UINT, 'default' => \XF::$time],
             'update_date' => ['type' => self::UINT, 'default' => \XF::$time]
         ];
         
