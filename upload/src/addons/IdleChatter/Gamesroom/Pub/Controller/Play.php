@@ -25,7 +25,7 @@ class Play extends AbstractController
         $relatedGames = $this->repository('IdleChatter\Gamesroom:Game')
             ->findActiveGamesForPublic($game->category_id)
             ->where('game_id', '!=', $game->game_id)
-            ->limit(6)
+            ->limit(5)
             ->fetch();
         
         $viewParams = [

@@ -88,17 +88,12 @@ class Index extends AbstractController
             ->order('title', 'ASC')
             ->fetch();
         
-       // Get featured games (top 3 most played, no featured column needed)
-        $featuredGames = \XF::finder('IdleChatter\Gamesroom:Game')
-            ->where('active', 1)
-            ->with('Category')
-            ->order('play_count', 'DESC')
-            ->limit(4)
-            ->fetch();
-
+       // Get featured games (marked as featured by admin)
+		$gameRepo = $this->repository('IdleChatter\Gamesroom:Game');
+		$featuredGames = $gameRepo->getFeaturedGames(4);
 	// $db = \XF::db();
 
-	// Pick 4 random IDs first
+	//Pick 4 random IDs first
 	//	$ids = $db->fetchAllColumn("
     	//	SELECT game_id
     	//	FROM xf_gamesroom_game
@@ -107,18 +102,18 @@ class Index extends AbstractController
   	//	 LIMIT 4
 	//");
 
-	// Then fetch the entities (keeps relations like Category)
-	//	$randomGames = $ids
-    	//	? \XF::finder('IdleChatter\Gamesroom:Game')
-       	//	 ->where('game_id', $ids)
-        //	->with('Category')
-      	//	  ->fetch()
-    	//: [];
-       
+	// Then fetch the entities (keeps relations like Category) 
+	//$featuredGames = $ids 
+	//? \XF::finder('IdleChatter\Gamesroom:Game') 
+	//->where('game_id', $ids) 
+	//->with('Category') 
+	//->fetch() 
+	//: [];  
+     
         $viewParams = [
             'games' => $games,
             'categories' => $categories,
-	        'randomGames' => $randomGames,
+	    'randomGames' => $randomGames,
             'featuredGames' => $featuredGames,
             'selectedCategory' => $categoryId,
             'currentSort' => $sort,
