@@ -145,18 +145,18 @@ class Game extends AbstractController
         $form = $this->formAction();
         
         $input = $this->filter([
-            'category_id' => 'uint',
-            'title' => 'str',
-            'description' => 'str',
-            'embed_url' => 'str',
-            'thumbnail_url' => 'str',
-            'distributor' => 'str',
-            'width' => 'uint',
-            'height' => 'uint',
-            'display_order' => 'uint',
-            'active' => 'bool'
-        ]);
-        
+    'category_id' => 'uint',
+    'title' => 'str',
+    'description' => 'str',
+    'embed_url' => 'str',
+    'thumbnail_url' => 'str',
+    'distributor' => 'str',
+    'width' => 'uint',
+    'height' => 'uint',
+    'display_order' => 'uint',
+    'active' => 'bool',
+    'is_featured' => 'bool'  // ADD THIS LINE
+]);        
         $form->basicEntitySave($game, $input);
         
         return $form;
